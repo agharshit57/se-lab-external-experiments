@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    tools {
+        jdk 'JDK17'
+        maven 'Maven3'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Compile and Test') {
+            steps {
+                sh 'mvn clean test'
+            }
+        }
+        stage('Package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Java Maven build completed successfully.'
+        }
+        failure {
+            echo 'Build failed. Check the console output.'
+        }
+    }
+}
