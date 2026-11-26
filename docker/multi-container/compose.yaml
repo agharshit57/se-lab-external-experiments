@@ -1,0 +1,15 @@
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8081:80"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+    depends_on:
+      - redis
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+volumes:
+  redis-data:
